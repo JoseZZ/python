@@ -1,6 +1,6 @@
 nombre = input("Introduce tu nombre:")
 ventas = input("Introduce cuanto has vendido este mes:")
 
-comisiones = (float(ventas) * 13) / 100
+comisiones = round((float(ventas) * 13) / 100, 2)
 
-print("Hola " + nombre + ", tus comisiones son de: " + str(round(comisiones, 2)))
+print(f"Hola {nombre}, tus comisiones son de: {comisiones} ")
