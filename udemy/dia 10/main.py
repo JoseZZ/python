@@ -43,6 +43,7 @@ for i in range(cantidad_enemigos):
     enemigo_y_cambio.append(50)
 
 # Variables bala
+balas = []
 bala_imagen = pygame.image.load("bala.png")
 bala_x = 0
 bala_y = 500
@@ -110,6 +111,13 @@ while se_ejecuta:
                 sonido_disparo = mixer.Sound("disparo.mp3")
                 sonido_disparo.set_volume(0.5)
                 sonido_disparo.play()
+                nueva_bala = {
+                    "x": jugador_x,
+                    "y": jugador_y,
+                    "velocidad": -5
+                }
+                balas.append(nueva_bala)
+
                 if not bala_visible:
                     bala_x = jugador_x
                     # Disparar la bala
@@ -151,27 +159,25 @@ while se_ejecuta:
             enemigo_y[i] += enemigo_y_cambio[i]
 
         # Colisión
-        colision = hay_colision(enemigo_x[i], enemigo_y[i], bala_x, bala_y)
-        if colision:
-            # Sonido de colisión
-            sonido_colision = mixer.Sound("golpe.mp3")
-            sonido_colision.set_volume(0.5)
-            sonido_colision.play()
-            bala_y = 500
-            bala_visible = False
-            puntuacion += 1
-            enemigo_x[i] = random.randint(0, 735)
-            enemigo_y[i] = random.randint(50, 200)
+        for bala in balas:
+            colision_bala_enemigo = hay_colision(enemigo_x[i], enemigo_y[i], bala["x"], bala["y"])
+            if colision_bala_enemigo:
+                sonido_colision = mixer.Sound("Golpe.mp3")
+                sonido_colision.play()
+                balas.remove(bala)
+                puntuacion += 1
+                enemigo_x[i] = random.randint(0, 736)
+                enemigo_y[i] = random.randint(20, 200)
+                break
 
         enemigo(enemigo_x[i], enemigo_y[i], i)
 
     # Movimiento de la bala
-    if bala_y <= -64:
-        bala_y = 500
-        bala_visible = False
-    if bala_visible:
-        disparar(bala_x, bala_y)
-        bala_y -= bala_y_cambio
+    for bala in balas:
+        bala["y"] += bala["velocidad"]
+        pantalla.blit(bala_imagen, (bala["x"] + 16, bala["y"] + 10))
+        if bala["y"] < 0:
+            balas.remove(bala)
 
     jugador(jugador_x, jugador_y)
     mostrar_puntuacion(texto_x, texto_y)
