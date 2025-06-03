@@ -10,6 +10,7 @@ def buscar_serie(archivo):
     file = open(archivo, "r")
     contenido = file.read()
     busqueda = re.search(patron, contenido)
+    file.close()
     if busqueda:
         return busqueda.group()
     else:
