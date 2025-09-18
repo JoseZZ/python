@@ -1,0 +1,22 @@
+# DevTools Suite - Dependencias
+# Interfaz gráfica (tkinter viene incluido con Python)
+# No se requieren dependencias adicionales para la funcionalidad básica
+
+# Dependencias opcionales para funcionalidades avanzadas:
+# Para manejo de imágenes
+Pillow>=9.0.0
+
+# Para generación de códigos QR
+qrcode>=7.3.1
+
+# Para manejo de JWT
+PyJWT>=2.4.0
+
+# Para formateo de SQL
+sqlparse>=0.4.2
+
+# Para conversión de imágenes
+opencv-python>=4.5.0
+
+# Para análisis de color (simulador de daltonismo)
+colorspacious>=1.1.2
